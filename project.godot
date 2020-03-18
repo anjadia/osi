@@ -1,0 +1,37 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "TileMap",
+"class": "Board",
+"language": "GDScript",
+"path": "res://src/board.gd"
+}, {
+"base": "Node2D",
+"class": "Pawn",
+"language": "GDScript",
+"path": "res://src/pawn.gd"
+}, {
+"base": "Pawn",
+"class": "Player",
+"language": "GDScript",
+"path": "res://src/player.gd"
+} ]
+_global_script_class_icons={
+"Board": "",
+"Pawn": "",
+"Player": ""
+}
+
+[application]
+
+config/name="Osi"
+run/main_scene="res://scenes/scene.tscn"
+config/icon="res://icon.png"
