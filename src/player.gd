@@ -3,13 +3,10 @@ extends Pawn
 class_name Player
 
 
-func _ready():
-	pass
-
-
 func _process(_delta):
 	var input_direction = get_input_direction()
-	move(input_direction)
+	if input_direction:
+		move(input_direction)
 
 
 func get_input_direction():
