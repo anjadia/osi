@@ -12,6 +12,7 @@ export(int) var speed = 32
 
 # tmp (?)
 onready var grid = get_node("/root/scene/board")
+onready var sprite = get_node("./sprite")
 onready var step_size = grid.cell_size
 
 # 'Location' is a grid related placement of a pawn,
@@ -28,7 +29,7 @@ var distance := Vector2()
 var guide := Vector2()
 
 # Auxiliary variables.
-var target_location := Vector2()
+var target_location
 
 
 func _ready():
@@ -39,6 +40,7 @@ func _ready():
 
 func _process(delta):
 	_move(delta)
+	_animate(delta)
 	update()
 
 
@@ -50,19 +52,29 @@ func _draw():
 			Color(255, 0, 0),
 			2
 		)
-	grid.set_cellv(location, 1) # Debug
-	if target_location:
 		grid.set_cellv(target_location, 2) # Debug
+	else:
+		grid.set_cellv(location, 1) # Debug
 
 
 func move(direction):
 	# It's impossible to change movement direction (by now ?).
 	if not is_moving:
-		target_location = location + grid.to_projection(direction)
-		distance = grid.map_to_world(target_location) - position
-		velocity = distance.normalized() * speed
-		movement = Vector2.ZERO
-		is_moving = true
+		target_location = grid.request_move(
+			location + grid.to_projection(direction)
+		)
+		if target_location != null:
+			distance = grid.map_to_world(target_location) - position
+			velocity = distance.normalized() * speed
+			movement = Vector2.ZERO
+			is_moving = true
+
+
+func flip(direction):
+	if direction.x > 0:
+		sprite.flip_h = true
+	else:
+		sprite.flip_h = false
 
 
 func place_to(new_location):
@@ -78,6 +90,7 @@ func _move(delta):
 			position += step
 		else:
 			grid.set_cellv(location, 0) # Debug
+			grid.lock_tile(location)
 			velocity = Vector2.ZERO
 			distance = Vector2.ZERO
 			movement = Vector2.ZERO
@@ -85,3 +98,7 @@ func _move(delta):
 			position = grid.map_to_world(location)
 			target_location = Vector2.ZERO
 			is_moving = false
+
+
+func _animate(delta):
+	pass
