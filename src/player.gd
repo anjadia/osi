@@ -8,6 +8,8 @@ func _process(_delta):
 	if input_direction:
 		flip(input_direction)
 		move(input_direction)
+	if Input.is_action_just_released("ui_select"):
+		get_tree().reload_current_scene()
 
 func get_input_direction():
 	return Vector2(

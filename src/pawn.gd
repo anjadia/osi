@@ -52,9 +52,6 @@ func _draw():
 			Color(255, 0, 0),
 			2
 		)
-		grid.set_cellv(target_location, 2) # Debug
-	else:
-		grid.set_cellv(location, 1) # Debug
 
 
 func move(direction):
@@ -89,7 +86,6 @@ func _move(delta):
 		if movement.abs() < distance.abs():
 			position += step
 		else:
-			grid.set_cellv(location, 0) # Debug
 			grid.lock_tile(location)
 			velocity = Vector2.ZERO
 			distance = Vector2.ZERO
@@ -98,7 +94,8 @@ func _move(delta):
 			position = grid.map_to_world(location)
 			target_location = Vector2.ZERO
 			is_moving = false
-
+			if grid.win(location):
+				print("WOW!")
 
 func _animate(delta):
 	pass
