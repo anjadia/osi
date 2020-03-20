@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://src/board.gd" type="Script" id=1]
 [ext_resource path="res://assets/tilesets/colors.tres" type="TileSet" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://src/player.gd" type="Script" id=4]
 [ext_resource path="res://assets/sounds/bell.ogg" type="AudioStream" id=5]
 [ext_resource path="res://assets/sounds/locked.ogg" type="AudioStream" id=6]
+[ext_resource path="res://assets/sounds/theme.ogg" type="AudioStream" id=7]
+[ext_resource path="res://assets/img/pawn.png" type="Texture" id=8]
 
 [sub_resource type="Gradient" id=1]
 colors = PoolColorArray( 0.215686, 0.631373, 1, 1, 1, 1, 1, 1 )
@@ -76,11 +78,20 @@ stream = ExtResource( 5 )
 [node name="player" type="Node2D" parent="."]
 position = Vector2( 512, 150 )
 script = ExtResource( 4 )
-cell_alignment = Vector2( 0, -24 )
+cell_alignment = Vector2( 0, -8 )
 spawn = Vector2( 0, 4 )
 speed = 96
 
 [node name="sprite" type="AnimatedSprite" parent="player"]
+visible = false
 frames = SubResource( 7 )
 animation = "walk"
 frame = 2
+
+[node name="pawn" type="Sprite" parent="player"]
+texture = ExtResource( 8 )
+
+[node name="music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = -6.0
+autoplay = true
