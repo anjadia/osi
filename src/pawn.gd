@@ -1,5 +1,4 @@
 extends Node2D
-
 class_name Pawn
 
 # Because the origin of a pawn is always placed in cells' top corner,
@@ -18,8 +17,6 @@ onready var step_size = grid.cell_size
 # 'Location' is a grid related placement of a pawn,
 # whereas built-in 'position' corresponds to its pixel coordinates.
 var location := Vector2()
-# Look direction of a pawn.
-var lookahead := Vector2()
 # State machine, some kind.
 var is_moving := false
 
@@ -44,27 +41,22 @@ func _process(delta):
 	update()
 
 
-func _draw():
-	if is_moving:
-		draw_line(
-			Vector2(0, 0),
-			grid.map_to_world(target_location) - position,
-			Color(255, 0, 0),
-			2
-		)
-
-
 func move(direction):
-	# It's impossible to change movement direction (by now ?).
+	# It's impossible to change direction while moving (by now ?).
 	if not is_moving:
 		target_location = grid.request_move(
 			location + grid.to_projection(direction)
 		)
 		if target_location != null:
+			is_moving = true
 			distance = grid.map_to_world(target_location) - position
 			velocity = distance.normalized() * speed
 			movement = Vector2.ZERO
-			is_moving = true
+
+
+func place_to(new_location):
+	location = new_location
+	position = grid.map_to_world(location)
 
 
 func flip(direction):
@@ -74,14 +66,9 @@ func flip(direction):
 		sprite.flip_h = false
 
 
-func place_to(new_location):
-	location = new_location
-	position = grid.map_to_world(location)
-
-
 func _move(delta):
 	if is_moving:
-		var step = velocity * delta 
+		var step = velocity * delta
 		movement += velocity * delta
 		if movement.abs() < distance.abs():
 			position += step
@@ -94,8 +81,15 @@ func _move(delta):
 			position = grid.map_to_world(location)
 			target_location = Vector2.ZERO
 			is_moving = false
-			if grid.win(location):
-				print("WOW!")
 
-func _animate(delta):
+
+func _animate(_delta):
 	pass
+
+
+func _draw():
+	if is_moving:
+		draw_line(
+			Vector2(0, 0), grid.map_to_world(target_location) - position,
+			Color(255, 0, 0), 2
+		)

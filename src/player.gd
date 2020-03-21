@@ -1,25 +1,34 @@
 extends Pawn
-
 class_name Player
 
 
+signal win
+
 func _process(_delta):
-	var input_direction = get_input_direction()
-	if input_direction:
-		flip(input_direction)
-		move(input_direction)
-	if Input.is_action_just_released("ui_select"):
-		get_tree().reload_current_scene()
+	_gather_input_events()
+	# Check winning condition.
+	if grid.win(location):
+		emit_signal("win")
 
-func get_input_direction():
-	return Vector2(
-		Input.get_action_strength("ui_right")- Input.get_action_strength("ui_left"),
-		Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
-	)
 
-func _animate(delta):
+func _animate(_delta):
 	if is_moving:
 		sprite.animation = "walk"
 		sprite.play()
 	else:
 		sprite.animation = "idle"
+
+
+func _gather_input_events():
+	# Reset the game.
+	if Input.is_action_just_released("ui_select"):
+		# warning-ignore:return_value_discarded
+		get_tree().reload_current_scene()
+	# Move.
+	var input_direction = Vector2(
+		Input.get_action_strength("ui_right")- Input.get_action_strength("ui_left"),
+		Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
+	)
+	if input_direction:
+		flip(input_direction)
+		move(input_direction)
