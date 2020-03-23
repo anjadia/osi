@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/platform.gd" type="Script" id=1]
+[ext_resource path="res://assets/tilesets/colors.tres" type="TileSet" id=2]
+
+[node name="walls" type="TileMap"]
+mode = 1
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 64, 32 )
+cell_custom_transform = Transform2D( 0, 0, 0, 0, 0, 0 )
+cell_y_sort = true
+format = 1
+tile_data = PoolIntArray( 0, 2, 0, 1, 2, 0, 65536, 2, 0, 131072, 2, 0, 196608, 2, 0, 262144, 2, 0, 327680, 2, 0, 393216, 2, 0, 458752, 2, 0, 524288, 2, 0, 524289, 2, 0 )
+script = ExtResource( 1 )
+spawn = Vector2( 1, 1 )
+
+[node name="floor" type="TileMap" parent="."]
+position = Vector2( 0, 8 )
+mode = 1
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 64, 32 )
+cell_custom_transform = Transform2D( 0, 0, 0, 0, 0, 0 )
+format = 1
+tile_data = PoolIntArray( 1, 1, 0, 65536, 1, 0, 65537, 0, 0, 131072, 1, 0, 131073, 0, 0, 196608, 1, 0, 196609, 0, 0, 262144, 1, 0, 262145, 0, 0, 327680, 1, 0, 327681, 0, 0, 393216, 1, 0, 393217, 0, 0, 458752, 1, 0, 458753, 3, 0, 524288, 1, 0, 524289, 1, 0 )

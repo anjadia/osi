@@ -5,8 +5,15 @@
 [node name="ui" type="Node2D"]
 
 [node name="timer_label" type="RichTextLabel" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
+margin_right = 400.0
+margin_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_clip_content = false
+size_flags_horizontal = 2
+size_flags_vertical = 2
+bbcode_enabled = true
+scroll_active = false
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false

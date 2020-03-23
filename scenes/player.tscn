@@ -39,7 +39,6 @@ animations = [ {
 
 [node name="player" type="Node2D"]
 script = ExtResource( 1 )
-cell_alignment = Vector2( 0, -8 )
 spawn = Vector2( 0, 4 )
 speed = 96
 
@@ -48,6 +47,7 @@ visible = false
 frames = SubResource( 5 )
 animation = "walk"
 frame = 2
+centered = false
 
 [node name="pawn" type="Sprite" parent="."]
 texture = ExtResource( 2 )

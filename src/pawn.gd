@@ -10,9 +10,9 @@ export(Vector2) var spawn = Vector2(0, 0)
 export(int) var speed = 32
 
 # tmp (?)
-onready var grid = get_node("/root/scene/board")
+onready var grid = get_node("..")
 onready var sprite = get_node("./sprite")
-onready var step_size = grid.cell_size
+
 
 # 'Location' is a grid related placement of a pawn,
 # whereas built-in 'position' corresponds to its pixel coordinates.
@@ -32,13 +32,13 @@ var target_location
 func _ready():
 	place_to(spawn)
 	for child in get_children():
-		child.transform.origin += cell_alignment
+		child.transform.origin = Vector2.ZERO + cell_alignment
 
 
 func _process(delta):
 	_move(delta)
 	_animate(delta)
-	update()
+	#update()
 
 
 func move(direction):
@@ -87,9 +87,15 @@ func _animate(_delta):
 	pass
 
 
+func reset():
+	is_moving = false
+	place_to(spawn)
+
+
 func _draw():
 	if is_moving:
 		draw_line(
-			Vector2(0, 0), grid.map_to_world(target_location) - position,
+			cell_alignment,
+			grid.map_to_world(target_location) - position + cell_alignment,
 			Color(255, 0, 0), 2
 		)
