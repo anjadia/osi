@@ -32,7 +32,8 @@ func reset():
 
 
 func request_move(target):
-	if platform.get_cellv(target) in allowed_cells:
+	var target_cell_type = platform.get_cellv(target)
+	if target_cell_type in allowed_cells or target_cell_type > cell_type.POST:
 		return target
 	else:
 		return

@@ -7,7 +7,7 @@ onready var current_scene = $platform
 onready var background = $background
 
 var scenes = [
-	"res://scenes/platform_01.tscn"
+	"res://scenes/platform_02.tscn"
 ]
 
 func _ready():
